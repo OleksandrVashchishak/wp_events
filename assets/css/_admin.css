@@ -1,0 +1,31 @@
+
+._ax_events-wrapper {
+    display: flex;
+}
+._ax_events-box {
+    margin-right: 20px;
+    width: 25%;
+}
+
+._ax_events-box-50 {
+    width: 50%;
+}
+._ax_events-box select,
+._ax_events-box input {
+    width: 100%;
+    display: block;
+}
+
+
+._ax_events-title {
+    max-width: 50%;
+    text-align: center;
+    margin: 15px 0 0 0;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+._ax_events-select {
+    display: block;
+    width: 20%;
+}
