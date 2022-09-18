@@ -18,8 +18,8 @@ class Ax_Rest_List_Pagination
     public function add_rest_api_list_pagination()
     {
         $namespace = 'ax/v1';
-        $id_point = '(?P<id>[0-9-]+)';
-        $rout = '/list_pagination/' . $id_point;
+        $date = '(?P<date>[0-9-]+)';
+        $rout = '/list_pagination/' . $date;
 
         register_rest_route($namespace, $rout, array(
             'methods' => 'GET',
@@ -27,12 +27,24 @@ class Ax_Rest_List_Pagination
         ));
     }
 
-    public function list_pagination()
+    public function list_pagination($request)
     {
+        $date = strtotime($request['date']);
         $args = array(
             'post_type' => 'events',
             'posts_per_page' => -1,
             'post_status' => array('publish'),
+            'meta_query' => array(
+                'event_start' => array(
+                    'key' => 'ax_time_start',
+                ),
+                array(
+                    'key'     => 'ax_time_start',
+                    'value'   => $date,
+                    'compare' => '>=',
+                ),
+             
+            ),
         );
 
         $events = get_posts($args);

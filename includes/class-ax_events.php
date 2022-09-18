@@ -44,6 +44,12 @@ class ax_events
         //== START CHECKOUT COMPONTS ==//
         new Ax_Rest_Checkout();
         new Ax_Rest_Send_Invoice();
+
+        //== START USER COMPONENTS ==//
+        new Ax_Rest_Register_User();
+        new Ax_Rest_Get_User_ID();
+        new Ax_Rest_User_Orders();
+        new Ax_Rest_Refund();
     }
 
     public function register_cpt()

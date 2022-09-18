@@ -1,7 +1,9 @@
 import React from "react";
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Checkout = () => {
+    const navigate = useNavigate();
     const [firstName, setFirstName] = React.useState('fn');
     const [lastName, setLastName] = React.useState('ln');
     const [email, setEmail] = React.useState('em@user.com');
@@ -27,23 +29,30 @@ const Checkout = () => {
     }, []);
 
     const paymentHandler = () => {
-        const apiHost = 'http://cars/wp-json';
-        axios({
-            method: 'POST',
-            url: apiHost + `/ax/v1/send_invoice`,
-            params: {
-                first_name: firstName,
-                last_name: lastName,
-                email: email,
-                tickets_count: count,
-                total: count * event.price,
-                event_id: eventId,
-            }
-        }).then((response) => {
-            console.log(response.data);
-        }).catch(function (err) {
-            console.log(err);
-        });
+        if (Number(count) > Number(event.ticket_left)) {
+            alert('You cannot buy more tickets than are available, try to choose another event')
+        } else {
+            const apiHost = 'http://cars/wp-json';
+            axios({
+                method: 'POST',
+                url: apiHost + `/ax/v1/send_invoice`,
+                params: {
+                    first_name: firstName,
+                    last_name: lastName,
+                    email: email,
+                    tickets_count: count,
+                    total: count * event.price,
+                    event_id: eventId,
+                    user_id: localStorage.getItem("user_id"),
+                }
+            }).then((response) => {
+                if(response.data == 200) {
+                    navigate(`/thanks`);
+                } 
+            }).catch(function (err) {
+                console.log(err);
+            });
+        }
     }
 
 

@@ -6,14 +6,14 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 
-const TopBar = () => {
+const TopBar = ({isLogin,setIsLogin}) => {
 
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <NavMenu />
-                    <LoginMenu  />
+                    <LoginMenu isLogin={isLogin} setIsLogin={setIsLogin} />
                 </Toolbar>
             </Container>
         </AppBar>

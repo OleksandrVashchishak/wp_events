@@ -11,11 +11,16 @@ const ListItem = ({ event }) => {
         <div className="ax_list-item">
             <div className="ax_list-info">
                 <p className="ax_list-dates">
-                    {event.start_date} {event.start_time} - {event.end_date} {event.end_time}
+                    {event.start_date} @ {event.start_time} - {event.end_date} @ {event.end_time}
                 </p>
                 <h3 className="ax_list-title">{event.title}</h3>
                 <span className="ax_list-location">Location: {event.country} - {event.location}</span>
-                <span className="ax_list-category">Category: Sport</span>
+                {event.cats && <span className="ax_list-category">
+                    Category:
+                    {event.cats.map(cat => (
+                        cat.name
+                    ))}
+                </span>}
                 <div className="ax_list-content" dangerouslySetInnerHTML={{ __html: event.content }} ></div>
                 <span className="ax_list-price">Price: ${event.price}</span>
                 <button onClick={() => handleClickEvent(event.id)} >See more</button>

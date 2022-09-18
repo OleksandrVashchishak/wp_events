@@ -19,7 +19,8 @@ class Ax_Rest_List
     {
         $namespace = 'ax/v1';
         $page = '(?P<page>[0-9-]+)';
-        $rout = '/list/' . $page;
+        $date = '(?P<date>[0-9-]+)';
+        $rout = '/list/' . $page . '/' . $date;
 
         register_rest_route($namespace, $rout, array(
             'methods' => 'GET',
@@ -30,12 +31,38 @@ class Ax_Rest_List
     public function list($request)
     {
         $page = $request['page'];
+        $date = strtotime($request['date']);
         $eventsResult = array();
         $args = array(
             'post_type' => 'events',
             'posts_per_page' => 4,
             'post_status' => array('publish'),
             'paged' => $page,
+            'meta_query' => array(
+                'event_start' => array(
+                    'key' => 'ax_time_start',
+                ),
+                array(
+                    'key'     => 'ax_time_start',
+                    'value'   => $date,
+                    'compare' => '>=',
+                ),
+                //     array(
+                //         'relation' => 'AND',
+                //         array(
+                //                 'key'     => 'ax_time_start',
+                //                 'value'   => $date,
+                //                 'compare' => '>=',
+                //         ),
+                //         array(
+                //                 'key'     => 'ax_time_end',
+                //                 'value'   => '$date',
+                //                 'compare' => '<=',
+                //         ),
+                // ),
+            ),
+            'orderby' => 'event_start',
+            'order' => 'ASC',
         );
 
         $events = get_posts($args);
@@ -49,12 +76,13 @@ class Ax_Rest_List
             $country = get_post_meta($event_id, 'ax_country', true);
             $price = get_post_meta($event_id, 'ax_price', true);
             $thumbnail = get_the_post_thumbnail_url($event_id);
-            $content = wp_trim_words( $event->post_content, 50, '[...]');
+            $content = wp_trim_words($event->post_content, 50, '[...]');
+           $cats = get_the_terms( $event, 'events-cat' );
             $eventsObj = array(
                 'id' => $event_id,
                 'title' => $event->post_title,
-                'start_date' => $start_date,
-                'end_date' => $end_date,
+                'start_date' => date('d F',strtotime($start_date)),
+                'end_date' => date('d F',strtotime($end_date)),
                 'start_time' => $start_time,
                 'end_time' => $end_time,
                 'content' => $content,
@@ -62,6 +90,7 @@ class Ax_Rest_List
                 'location' => $location,
                 'price' => $price,
                 'thumbnail' => $thumbnail,
+                'cats' => $cats,
             );
 
             array_push($eventsResult, $eventsObj);

@@ -48,6 +48,10 @@ class Ax_Rest_Send_Invoice
                     'type'     => 'number',
                     'required' => true,
                 ),
+                'user_id' => array(
+                    'type'     => 'number',
+                    'required' => true,
+                ),
 
             ),
         ));
@@ -62,6 +66,7 @@ class Ax_Rest_Send_Invoice
             'tickets_count' => sanitize_text_field($request->get_param('tickets_count')),
             'total' => sanitize_text_field($request->get_param('total')),
             'event_id' => sanitize_text_field($request->get_param('event_id')),
+            'user_id' => sanitize_text_field($request->get_param('user_id')),
         );
         $event_id = $response['event_id'];
         $tickets_count = $response['tickets_count'];
@@ -78,6 +83,8 @@ class Ax_Rest_Send_Invoice
         $email = $data['email'];
         $tickets_count = $data['tickets_count'];
         $total = $data['total'];
+        $user_id = $data['user_id'];
+        $event_id = $data['event_id'];
 
         $args = array(
             'post_title'    => 'Order | ' . $first_name . ' ' . $last_name,
@@ -93,6 +100,9 @@ class Ax_Rest_Send_Invoice
         update_post_meta($order_id, 'ax_tickets_count', $tickets_count,);
         update_post_meta($order_id, 'ax_total', $total,);
         update_post_meta($order_id, 'ax_order_status', 'pending');
+        update_post_meta($order_id, 'ax_customer_id', $user_id);
+        update_post_meta($order_id, 'ax_event_id', $event_id);
+        update_post_meta($order_id, 'ax_refund_status', 'none');
     }
 
     private function hundler_ticket_left($event_id, $tickets_count)

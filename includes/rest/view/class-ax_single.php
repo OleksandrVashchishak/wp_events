@@ -52,11 +52,12 @@ class Ax_Rest_Single
             $thumbnail = get_the_post_thumbnail_url($event_id);
             $content = $event->post_content;
             $ticket_left = $max_ticket - $bought_tickets;
+            $cats = get_the_terms( $event, 'events-cat' );
             $event = array(
                 'id' => $event_id,
                 'title' => $event->post_title,
-                'start_date' => $start_date,
-                'end_date' => $end_date,
+                'start_date' => date('d F',strtotime($start_date)),
+                'end_date' => date('d F',strtotime($end_date)),
                 'start_time' => $start_time,
                 'end_time' => $end_time,
                 'content' => $content,
@@ -66,6 +67,7 @@ class Ax_Rest_Single
                 'thumbnail' => $thumbnail,
                 'ticket_left' => $ticket_left,
                 'max_ticket' => $max_ticket,
+                'cats' => $cats,
             );
         }
 

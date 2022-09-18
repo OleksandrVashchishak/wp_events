@@ -59,6 +59,7 @@ a {
     display: block;
     font-size: 16px;
     color: rgba(0, 0, 0, 0.6);
+    margin-top: 4px;
 }
 .ax_list-category {
     display: block;
@@ -163,6 +164,7 @@ a {
     padding-bottom: 80px;
 }
 
+.ax_order-row,
 .ax_checkout-row {
     display: flex;
     align-items: center;
@@ -176,14 +178,34 @@ a {
     }
 }
 
+.ax_account-orders {
+    max-width: 800px;
+    margin: 30px auto 0 auto;
+}
+
+.ax_order-cell,
 .ax_checkout-cell {
     padding: 6px;
+    min-height: 31px;
+    height: 100%;
     border-left: 1px solid #000;
     &:last-child {
         border-right: 1px solid #000;
     }
+    button {
+        cursor: pointer;
+        font-weight: 800;
+    }
+}
+.ax_order-cell-10 {
+    width: 10%;
 }
 
+.ax_order-cell-25 {
+    width: 25%;
+}
+
+.ax_order-cell-20,
 .ax_checkout-cell-20 {
     width: 20%;
 }
@@ -298,4 +320,84 @@ a {
         }
     }
 }
- 
+
+.ax_list-nothing {
+    text-align: center;
+    padding: 40px;
+    font-size: 32px;
+    color: #333;
+}
+
+.ax_datebar {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    margin: 20px auto;
+    button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 35px;
+        height: 35px;
+        border: 2px solid #333;
+        border-radius: 8px;
+        margin-right: 8px;
+        font-size: 18px;
+        font-weight: bold;
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.5s;
+        &:hover {
+            background: #333;
+            color: #fff;
+        }
+        &:active {
+            transform: scale(1.05);
+        }
+    }
+}
+
+.ax_datebar-title {
+    font-size: 24px;
+    font-weight: 800;
+    margin-left: 14px;
+    color: #333;
+}
+
+.ax_list-dates {
+    font-size: 16px;
+    color: #333;
+    letter-spacing: -0.5px;
+    margin: 0;
+}
+
+.ax_thanks {
+    h3 {
+        text-align: center;
+        font-size: 38px;
+        color: #333;
+        margin-top: 60px;
+    }
+    h5 {
+        text-align: center;
+        font-size: 30px;
+        color: #000;
+        margin-top: 30px;
+    }
+}
+
+.ax_event-no-login {
+    text-align: center;
+    color: red;
+    font-size: 24px;
+    max-width: 520px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid red;
+}
+
+.ax_account h3{
+    color: #333;
+    text-align: center;
+    font-size: 28px;
+}

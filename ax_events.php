@@ -33,6 +33,11 @@ require_once 'includes/rest/checkout/class-ax_checkout.php';
 require_once 'includes/rest/checkout/class-ax_send-invoice.php';
 require_once 'includes/rest/checkout/class-ax_payment-success.php';
 
+require_once 'includes/rest/users/class-ax_register-user.php';
+require_once 'includes/rest/users/class-ax_get-user-id.php';
+require_once 'includes/rest/users/class-ax_user-orders.php';
+require_once 'includes/rest/users/class-ax_refund.php';
+
 
 function ax_events()
 {

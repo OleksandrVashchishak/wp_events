@@ -63,7 +63,20 @@ class Ax_Events_Metabox
             <div class="_ax_events-location _ax_events-wrapper">
                 <div class="_ax_events-box">
                     <label for="from">Country <?= $country ?> </label>
-                    <select id="ax_country" name="ax_country"> <?php require_once 'assets/countrys.php'; ?> </select>
+                    <select id="ax_country" name="ax_country" data-value='<?= $country ?>'> <?php require_once 'assets/countrys.php'; ?> </select>
+
+                    <script>
+                        const country = document.querySelector('#ax_country')
+                        if (country) {
+                            const countryValue = country.getAttribute('data-value')
+                            country.querySelectorAll('option').forEach(option => {
+                                if (countryValue == option.value) {
+                                    option.selected = true;
+                                }
+                            })
+                        }
+                    </script>
+
                 </div>
                 <div class=" _ax_events-box">
                     <label for="to">Location</label>
@@ -94,11 +107,6 @@ class Ax_Events_Metabox
 
     function events_save_postdata($post_id)
     {
-
-        if (!wp_verify_nonce($_POST['events_noncename'], plugin_basename(__FILE__))) {
-            return;
-        }
-
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
             return;
         }
@@ -120,5 +128,9 @@ class Ax_Events_Metabox
         update_post_meta($post_id, 'ax_to_date', $to_date);
         update_post_meta($post_id, 'ax_from_time', $from_time);
         update_post_meta($post_id, 'ax_to_time', $to_time);
+
+        //== start to second ==//
+        update_post_meta($post_id, 'ax_time_start', strtotime($from_date));
+        //== end to second ==//
     }
 }

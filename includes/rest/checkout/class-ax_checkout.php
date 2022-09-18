@@ -56,9 +56,13 @@ class Ax_Rest_Checkout
         foreach ($events as $event) {
             $event_id = $event->ID;
             $price = get_post_meta($event_id, 'ax_price', true);
+            $max_ticket =  get_post_meta($event_id, 'ax_max_tickets', true);
+            $bought_tickets =  get_post_meta($event_id, 'ax_bought_tickets', true);
+            $ticket_left = $max_ticket - $bought_tickets;
             $event = array(
                 'title' => $event->post_title,
                 'price' => $price,
+                'ticket_left' => $ticket_left,
             );
         }
 
