@@ -35,6 +35,9 @@ class Ax_Events_Metabox
         $max_tickets = get_post_meta($post_id, 'ax_max_tickets', 1);
         $bought_tickets = get_post_meta($post_id, 'ax_bought_tickets', 1);
         $price = get_post_meta($post_id, 'ax_price', 1);
+
+
+
 ?>
         <div class="_ax_events">
             <h5 class="_ax_events-title">Date</h5>
@@ -101,7 +104,28 @@ class Ax_Events_Metabox
                     <input type="number" id="ax_price" name="ax_price" value="<?= $price ? $price : 100 ?>">
                 </div>
             </div>
+            <button class="xbutton">btn</button>
         </div>
+
+
+        <script>
+            const submit = document.querySelector('.xbutton')
+            submit.addEventListener('click', (e) => {
+                e.preventDefault()
+                const data = {
+                    'action': 'ax_create_pdf',
+                }
+
+                jQuery.ajax({
+                    url: '/wp-admin/admin-ajax.php',
+                    data: data,
+                    type: 'POST',
+                    success: function(data) {
+                        console.log(data);
+                    }
+                });
+            })
+        </script>
 <?php
     }
 

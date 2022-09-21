@@ -50,6 +50,9 @@ class ax_events
         new Ax_Rest_Get_User_ID();
         new Ax_Rest_User_Orders();
         new Ax_Rest_Refund();
+
+        //== CREATE PDF ==//
+        new AX_Ajax_Create_Pdf();
     }
 
     public function register_cpt()

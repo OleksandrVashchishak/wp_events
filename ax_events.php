@@ -16,6 +16,10 @@ if (!defined('ABSPATH')) {
 
 require_once 'includes/class-ax_events.php';
 
+require_once 'includes/lib/fpdf/fpdf.php';
+
+require_once 'includes/lib/ajax/class_ax_ajax_create_pdf.php';
+
 require_once 'includes/lib/cpt/class-ax_events_cpt.php';
 require_once 'includes/lib/cpt/class-ax_orders_cpt.php';
 require_once 'includes/lib/metaboxes/class-ax_events_metabox.php';
@@ -46,4 +50,3 @@ function ax_events()
 }
 
 ax_events();
-
