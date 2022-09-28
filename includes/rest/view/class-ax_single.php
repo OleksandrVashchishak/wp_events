@@ -53,6 +53,7 @@ class Ax_Rest_Single
             $content = $event->post_content;
             $ticket_left = $max_ticket - $bought_tickets;
             $cats = get_the_terms( $event, 'events-cat' );
+            $pdf_link = get_post_meta($event_id, 'ax_pdf_link', 1);
             $event = array(
                 'id' => $event_id,
                 'title' => $event->post_title,
@@ -68,6 +69,7 @@ class Ax_Rest_Single
                 'ticket_left' => $ticket_left,
                 'max_ticket' => $max_ticket,
                 'cats' => $cats,
+                'pdf_link' => $pdf_link,
             );
         }
 

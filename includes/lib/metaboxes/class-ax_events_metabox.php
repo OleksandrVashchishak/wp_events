@@ -35,9 +35,8 @@ class Ax_Events_Metabox
         $max_tickets = get_post_meta($post_id, 'ax_max_tickets', 1);
         $bought_tickets = get_post_meta($post_id, 'ax_bought_tickets', 1);
         $price = get_post_meta($post_id, 'ax_price', 1);
-
-
-
+        $repeat = get_post_meta($post_id, 'ax_repeat', 1);
+        $pdf = get_post_meta($post_id, 'ax_pdf_link', 1);
 ?>
         <div class="_ax_events">
             <h5 class="_ax_events-title">Date</h5>
@@ -104,29 +103,23 @@ class Ax_Events_Metabox
                     <input type="number" id="ax_price" name="ax_price" value="<?= $price ? $price : 100 ?>">
                 </div>
             </div>
-            <button class="xbutton">btn</button>
+            <h5 class="_ax_events-title">Repeat</h5>
+            <div class="_ax_events-tickets _ax_events-wrapper">
+                <div class=" _ax_events-box _ax_events-box-50">
+                    <label>Repeat every</label>
+                    <select id="ax_repeat" name="ax_repeat" class="_ax_events-select">
+                        <option <?= $repeat == 'none' ? 'selected' : '' ?> value="none">None</option>
+                        <option <?= $repeat == 'week' ? 'selected' : '' ?> value="week">Week</option>
+                        <option <?= $repeat == 'month' ? 'selected' : '' ?> value="month">Month</option>
+                    </select>
+                </div>
+            </div>
+            <a href="<?= $pdf ?>" target="_blank">
+                <h5 class="_ax_events-title">Link to PDF</h5>
+            </a>
         </div>
-
-
-        <script>
-            const submit = document.querySelector('.xbutton')
-            submit.addEventListener('click', (e) => {
-                e.preventDefault()
-                const data = {
-                    'action': 'ax_create_pdf',
-                }
-
-                jQuery.ajax({
-                    url: '/wp-admin/admin-ajax.php',
-                    data: data,
-                    type: 'POST',
-                    success: function(data) {
-                        console.log(data);
-                    }
-                });
-            })
-        </script>
 <?php
+        
     }
 
     function events_save_postdata($post_id)
@@ -143,6 +136,7 @@ class Ax_Events_Metabox
         $location =  sanitize_text_field($_POST['ax_location']);
         $max_tickets = sanitize_text_field($_POST['ax_max_tickets']);
         $price = sanitize_text_field($_POST['ax_price']);
+        $repeat = sanitize_text_field($_POST['ax_repeat']);
 
         update_post_meta($post_id, 'ax_price', $price);
         update_post_meta($post_id, 'ax_max_tickets', $max_tickets);
@@ -152,9 +146,14 @@ class Ax_Events_Metabox
         update_post_meta($post_id, 'ax_to_date', $to_date);
         update_post_meta($post_id, 'ax_from_time', $from_time);
         update_post_meta($post_id, 'ax_to_time', $to_time);
+        update_post_meta($post_id, 'ax_repeat', $repeat);
 
         //== start to second ==//
         update_post_meta($post_id, 'ax_time_start', strtotime($from_date));
         //== end to second ==//
+
+        //== start generate pdf ==//
+        // new Ax_Pdf_Generator($post_id);
+        //== end generate pdf ==//
     }
 }

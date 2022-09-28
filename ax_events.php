@@ -18,7 +18,7 @@ require_once 'includes/class-ax_events.php';
 
 require_once 'includes/lib/fpdf/fpdf.php';
 
-require_once 'includes/lib/ajax/class_ax_ajax_create_pdf.php';
+require_once 'includes/lib/pdf-generate/class_ax_pdf_generator.php';
 
 require_once 'includes/lib/cpt/class-ax_events_cpt.php';
 require_once 'includes/lib/cpt/class-ax_orders_cpt.php';
@@ -42,6 +42,10 @@ require_once 'includes/rest/users/class-ax_get-user-id.php';
 require_once 'includes/rest/users/class-ax_user-orders.php';
 require_once 'includes/rest/users/class-ax_refund.php';
 
+// require_once 'includes/cron/ax_add_cron_intervals.php';
+// require_once 'includes/cron/ax_cron_control.php';
+// require_once 'includes/cron/ax_repeat_events.php';
+
 
 function ax_events()
 {
@@ -50,3 +54,6 @@ function ax_events()
 }
 
 ax_events();
+
+register_activation_hook(__FILE__, 'on_activation_set_cron');
+register_deactivation_hook(__FILE__,  'on_deactivation_remove_cron');

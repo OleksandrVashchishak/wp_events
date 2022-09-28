@@ -120,6 +120,8 @@ class Ax_Orders_Metabox
 
         </div>
 <?php
+
+    
     }
 
     function orders_save_postdata($post_id)
@@ -138,7 +140,7 @@ class Ax_Orders_Metabox
         if ($refund_status == 'approved') {
             $event_id = get_post_meta($post_id, 'ax_event_id', 1);
             $tickets_count = get_post_meta($post_id, 'ax_tickets_count', 1);
-            
+
             $bought_tickets = get_post_meta($event_id, 'ax_bought_tickets', 1);
             $result = $bought_tickets - $tickets_count;
             update_post_meta($event_id, 'ax_bought_tickets', $result);

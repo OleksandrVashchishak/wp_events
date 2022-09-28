@@ -24,8 +24,9 @@ const ListItem = ({ event }) => {
                 <div className="ax_list-content" dangerouslySetInnerHTML={{ __html: event.content }} ></div>
                 <span className="ax_list-price">Price: ${event.price}</span>
                 <button onClick={() => handleClickEvent(event.id)} >See more</button>
+                {event.pdf_link && <a className="ax_list-pdf" href={event.pdf_link} target='_blank'> See event in PDF</a>}
+
             </div>
-            <img src="" alt="" />
             <div className="ax_list-img-wrap">
                 {event.thumbnail && <img src={event.thumbnail} alt="image" className="ax_list-img" />}
             </div>

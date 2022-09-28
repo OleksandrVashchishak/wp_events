@@ -77,12 +77,13 @@ class Ax_Rest_List
             $price = get_post_meta($event_id, 'ax_price', true);
             $thumbnail = get_the_post_thumbnail_url($event_id);
             $content = wp_trim_words($event->post_content, 50, '[...]');
-           $cats = get_the_terms( $event, 'events-cat' );
+            $cats = get_the_terms($event, 'events-cat');
+            $pdf_link = get_post_meta($event_id, 'ax_pdf_link', 1);
             $eventsObj = array(
                 'id' => $event_id,
                 'title' => $event->post_title,
-                'start_date' => date('d F',strtotime($start_date)),
-                'end_date' => date('d F',strtotime($end_date)),
+                'start_date' => date('d F', strtotime($start_date)),
+                'end_date' => date('d F', strtotime($end_date)),
                 'start_time' => $start_time,
                 'end_time' => $end_time,
                 'content' => $content,
@@ -91,6 +92,7 @@ class Ax_Rest_List
                 'price' => $price,
                 'thumbnail' => $thumbnail,
                 'cats' => $cats,
+                'pdf_link' => $pdf_link,
             );
 
             array_push($eventsResult, $eventsObj);

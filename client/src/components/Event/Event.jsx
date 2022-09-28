@@ -62,6 +62,8 @@ const Event = ({isLogin}) => {
 
             <div className="ax_event-content" dangerouslySetInnerHTML={{ __html: event.content }}></div>
 
+            {event.pdf_link && <a className="ax_event-pdf" href={event.pdf_link} target='_blank'> See event in PDF</a>}
+
             <div className="ax_event-price">Price: ${event.price}</div>
             <div className="ax-event-tikets">Tickets left: {event.ticket_left}</div>
             {isLogin && event.ticket_left !== 0 && <div className="ax-event-buy-wrap">
