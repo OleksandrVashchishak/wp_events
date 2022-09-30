@@ -23,6 +23,7 @@ function ax_create_repeat_events_cron($events, $interval) {
         update_post_meta($new_event_id, 'ax_time_start', strtotime($interval, strtotime($from_date)));
         $to_date = get_post_meta($event->ID, 'ax_to_date', 1);
         update_post_meta($new_event_id, 'ax_to_date', date('Y-m-d', strtotime($interval, strtotime($to_date))));
+        update_post_meta($new_event_id, 'ax_time_end', strtotime($interval, strtotime($to_date)));
         $from_time = get_post_meta($event->ID, 'ax_from_time', 1);
         update_post_meta($new_event_id, 'ax_from_time', $from_time);
         $to_time = get_post_meta($event->ID, 'ax_to_time', 1);

@@ -20,7 +20,9 @@ class Ax_Rest_List
         $namespace = 'ax/v1';
         $page = '(?P<page>[0-9-]+)';
         $date = '(?P<date>[0-9-]+)';
-        $rout = '/list/' . $page . '/' . $date;
+        $search = '(?P<search>[a-zA-Z0-9-]+)';
+        $location = '(?P<location>[a-zA-Z0-9-]+)';
+        $rout = '/list/' . $page . '/' . $date . '/' . $search . '/' . $location;
 
         register_rest_route($namespace, $rout, array(
             'methods' => 'GET',
@@ -32,6 +34,9 @@ class Ax_Rest_List
     {
         $page = $request['page'];
         $date = strtotime($request['date']);
+        $search = $request['search'];
+        $location_filter = $request['location'];
+
         $eventsResult = array();
         $args = array(
             'post_type' => 'events',
@@ -43,27 +48,34 @@ class Ax_Rest_List
                     'key' => 'ax_time_start',
                 ),
                 array(
-                    'key'     => 'ax_time_start',
-                    'value'   => $date,
-                    'compare' => '>=',
+                    'relation' => 'AND',
+                    array(
+                        'key'     => 'ax_time_start',
+                        'value'   => $date,
+                        'compare' => '<=',
+                    ),
+                    array(
+                        'key'     => 'ax_time_end',
+                        'value'   => $date,
+                        'compare' => '>=',
+                    ),
                 ),
-                //     array(
-                //         'relation' => 'AND',
-                //         array(
-                //                 'key'     => 'ax_time_start',
-                //                 'value'   => $date,
-                //                 'compare' => '>=',
-                //         ),
-                //         array(
-                //                 'key'     => 'ax_time_end',
-                //                 'value'   => '$date',
-                //                 'compare' => '<=',
-                //         ),
-                // ),
             ),
             'orderby' => 'event_start',
             'order' => 'ASC',
         );
+
+        if ($location_filter) {
+            array_push($args['meta_query'],  array(
+                'key' => 'ax_country',
+                'value' => $location_filter,
+                'compare' => "LIKE",
+            ));
+        }
+
+        if ($search) {
+            $args['s'] = $search;
+        }
 
         $events = get_posts($args);
         foreach ($events as $event) {

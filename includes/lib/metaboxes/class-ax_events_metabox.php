@@ -150,10 +150,11 @@ class Ax_Events_Metabox
 
         //== start to second ==//
         update_post_meta($post_id, 'ax_time_start', strtotime($from_date));
+        update_post_meta($post_id, 'ax_time_end', strtotime($to_date));
         //== end to second ==//
 
         //== start generate pdf ==//
-        // new Ax_Pdf_Generator($post_id);
+        new Ax_Pdf_Generator($post_id);
         //== end generate pdf ==//
     }
 }

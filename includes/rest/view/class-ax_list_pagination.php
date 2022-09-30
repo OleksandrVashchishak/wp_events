@@ -19,7 +19,9 @@ class Ax_Rest_List_Pagination
     {
         $namespace = 'ax/v1';
         $date = '(?P<date>[0-9-]+)';
-        $rout = '/list_pagination/' . $date;
+        $search = '(?P<search>[a-zA-Z0-9-]+)';
+        $location = '(?P<location>[a-zA-Z0-9-]+)';
+        $rout = '/list_pagination/' . $date . '/' . $search . '/' . $location;
 
         register_rest_route($namespace, $rout, array(
             'methods' => 'GET',
@@ -30,6 +32,9 @@ class Ax_Rest_List_Pagination
     public function list_pagination($request)
     {
         $date = strtotime($request['date']);
+        $search = $request['search'];
+        $location_filter = $request['location'];
+
         $args = array(
             'post_type' => 'events',
             'posts_per_page' => -1,
@@ -43,9 +48,21 @@ class Ax_Rest_List_Pagination
                     'value'   => $date,
                     'compare' => '>=',
                 ),
-             
+
             ),
         );
+
+        if ($location_filter) {
+            array_push($args['meta_query'],  array(
+                'key' => 'ax_country',
+                'value' => $location_filter,
+                'compare' => "LIKE",
+            ));
+        }
+
+        if ($search) {
+            $args['s'] = $search;
+        }
 
         $events = get_posts($args);
         $pagination_count = ceil(count($events) / 4);

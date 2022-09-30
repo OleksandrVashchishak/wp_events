@@ -396,7 +396,7 @@ a {
     border: 1px solid red;
 }
 
-.ax_account h3{
+.ax_account h3 {
     color: #333;
     text-align: center;
     font-size: 28px;
@@ -418,4 +418,26 @@ a {
     margin-left: auto;
     margin-right: auto;
     margin-top: 12px;
+}
+
+.ax_filterbar {
+    display: flex;
+    margin-top: 25px;
+    input {
+        display: block;
+        height: 40px;
+        width: 240px;
+        padding: 10px;
+        font-size: 16px;
+        margin-right: 20px;
+    }
+
+    button {
+        cursor: pointer;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        width: 120px;
+        
+    }
 }

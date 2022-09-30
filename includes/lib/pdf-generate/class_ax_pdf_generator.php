@@ -30,8 +30,10 @@ class Ax_Pdf_Generator
 
         $category = '';
         $cats = get_the_terms($event, 'events-cat');
-        foreach ($cats as $cat) {
-            $category .= $cat->name . ' ';
+        if ($cats) {
+            foreach ($cats as $cat) {
+                $category .= $cat->name . ' ';
+            }
         }
 
         //== start get time ==//
